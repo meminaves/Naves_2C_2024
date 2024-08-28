@@ -27,7 +27,6 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <gpio_mcu.h>
-
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data definition]===============================*/
@@ -38,41 +37,28 @@ typedef struct
 } gpioConf_t;
 
 gpioConf_t vector_pines[4] = {{GPIO_20, GPIO_OUTPUT}, {GPIO_21, GPIO_OUTPUT}, {GPIO_22, GPIO_OUTPUT}, {GPIO_23, GPIO_OUTPUT}}; 
+gpioConf_t vector_pines_selector[3] = {{GPIO_19, GPIO_OUTPUT}, {GPIO_18, GPIO_OUTPUT}, {GPIO_9, GPIO_OUTPUT}};
 
 /*==================[internal functions declaration]=========================*/
-
-/*==================[external functions definition]==========================*/
-uint8_t BCDaGPIO(uint8_t digito, gpioConf_t * vector_gpioConf){
-	uint8_t mascara = 1;
-
-	//Inicializo cada GPIO con su pin y dir
-	for (int i=0; i<4; i++)
+mostrarValorPorDisplay(uint32 valor, uint cantDigitos, gpioConf_t * vector_gpioConf, gpioConf_t * vector_gpioConf_selector)
+{
+	//Primero inicializo el vector selector
+	for(int i=0; i<3; i++)
 	{
-		GPIOInit(vector_gpioConf[i].pin, vector_gpioConf[i].dir); 
+		GPIOInit(vector_gpioConf_selector[i].pin, vector_gpioConf_selector[i].dir);
 	}
 
-	//De acuerdo a digito, va muestreando los bits y se van poniendo en alto o bajo según corresponda
-	for(int j = 0; j < 4; j++)
-	{
-		if((digito & mascara) != 0)
-		{
-			GPIOOn(vector_pines[j].pin);
-		}
-		else{
-			GPIOOff(vector_pines[j].pin);	
-		}
-		mascara = mascara << 1;
-	}
+	//uint8_t digitos_bcd[3]
 
-return 1;
+	//convertirBcdaArray(valor, cantDigitos, digitos_bcd) //Separo los digitos de mi valor
+
+	//BCDaGPIO(digitos_bcd[], vector_gpioConf) //Llamo a la funcion para que convierta cada digito a gpio (lo muestre en el selector)
+
+	//Despues, deberia ir jugando con las llaves selectoras para mostrar cada digito en la pantalla lcd correspondiente
 }
-
+/*==================[external functions definition]==========================*/
 void app_main(void)
 {
 	printf("Hello world!\n");
-
-	uint8_t digito = 7;
-
-	BCDaGPIO(digito, vector_pines);
 }
 /*==================[end of file]============================================*/
