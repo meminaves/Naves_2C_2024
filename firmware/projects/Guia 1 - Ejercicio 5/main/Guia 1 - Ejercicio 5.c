@@ -58,7 +58,8 @@ uint8_t BCDaGPIO(uint8_t digito, gpioConf_t * vector_gpioConf){
 		{
 			GPIOOn(vector_pines[j].pin);
 		}
-		else{
+		else
+		{
 			GPIOOff(vector_pines[j].pin);	
 		}
 		mascara = mascara << 1;
@@ -71,7 +72,7 @@ void app_main(void)
 {
 	printf("Hello world!\n");
 
-	uint8_t digito = 7;
+	uint8_t digito = 9;
 
 	BCDaGPIO(digito, vector_pines);
 }
