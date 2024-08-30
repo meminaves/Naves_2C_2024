@@ -1,9 +1,10 @@
 /*! @mainpage Guia 1 Ejercicio 6
  *
  * @section Descripción
- * Este programa se encarga de mostrar por una pantalla lcd un valor de 32 bits.
- *
  * 
+ * 
+ * Este programa se encarga de mostrar por una pantalla lcd un valor numérico de 32 bits.
+ *
  *
  * @section hardConn Hardware Connection
  *
@@ -39,9 +40,8 @@
 /*==================[internal data definition]===============================*/
 
 /**
- * @def gpioConf_t
- * @brief estructura de tipo definida que representa un GPIO, junto a su numero de pin
- * y su direccion
+ * @struct gpioConf_t
+ * @brief Estructura de tipo definida que representa un GPIO: su numero de pin y su direccion
  */
 typedef struct
 {
@@ -50,13 +50,13 @@ typedef struct
 } gpioConf_t;
 
 /**
- * @def vector_pines
+ * @var vector_pines
  * @brief vector de tipo gpioConf_t que contiene los GPIO que controlan la entrada de datos del LCD
  */
 gpioConf_t vector_pines[4] = {{GPIO_20, GPIO_OUTPUT}, {GPIO_21, GPIO_OUTPUT}, {GPIO_22, GPIO_OUTPUT}, {GPIO_23, GPIO_OUTPUT}}; 
 
 /**
- * @def vector_pines_selector
+ * @var vector_pines_selector
  * @brief vector de tipo gpioConf_t que contiene los GPIO que permiten seleccionar qué lcd se enciende
  */
 gpioConf_t vector_pines_selector[3] = {{GPIO_19, GPIO_OUTPUT}, {GPIO_18, GPIO_OUTPUT}, {GPIO_9, GPIO_OUTPUT}};
@@ -68,6 +68,7 @@ gpioConf_t vector_pines_selector[3] = {{GPIO_19, GPIO_OUTPUT}, {GPIO_18, GPIO_OU
  * @param dato valor cuyos digitos quieren obtenerse
  * @param digitos cantidad de digitos en los cuales quiere descomponerse el valor
  * @param nro_bcd puntero al array donde se guardaran los digitos bcd
+ * @return 1 si la operación fue exitosa
  */
 int8_t  convertirBcdaArray (uint32_t dato, uint8_t digitos, uint8_t * nro_bcd)
 {
@@ -81,8 +82,10 @@ int8_t  convertirBcdaArray (uint32_t dato, uint8_t digitos, uint8_t * nro_bcd)
 
 /**
  * @fn uint8_t BCDaGPIO(uint8_t digito, gpioConf_t * vector_gpioConf)
- * @brief
- * @param
+ * @brief Función que se encarga de configurar las entradas GPIO según el número BCD de entrada en binario.
+ * @param digito Número bcd que será representado en binario en las GPIO
+ * @param vector_gpioConf Vector de tipo gpioConf_t que contiene los pines que se setearán según el digito
+ * @return 1 si la operación fue exitosa
  */
 uint8_t BCDaGPIO(uint8_t digito, gpioConf_t * vector_gpioConf){
 	uint8_t mascara = 1;
@@ -108,6 +111,16 @@ uint8_t BCDaGPIO(uint8_t digito, gpioConf_t * vector_gpioConf){
 
 return 1;
 }
+
+/**
+ * @fn uint8_t mostrarValorPorDisplay(uint32_t valor, uint8_t cantDigitos, gpioConf_t * p_vector_gpioConf, gpioConf_t * p_vector_gpioConf_selector)
+ * @brief función encargada de mostrar un valor de 32 bits por una pantalla lcd
+ * @param valor valor que se desea mostrar por pantalla
+ * @param cantDigitos cantidad de digitos que posee el valor que se desea mostrar por pantalla 
+ * @param p_vector_gpioConf Vector de tipo gpioConf_t que contiene los pines por los cuales ingresarán los digitos en binario para ser visualizados según corresponda
+ * @param p_vector_gpioConf_selector Vector de tipo gpioConf_t que contiene los pines que se encargan de seleccionar el lcd correspondiente para cada dígito
+ * @return 1 si la operación fue exitosa
+ */
 uint8_t mostrarValorPorDisplay(uint32_t valor, uint8_t cantDigitos, gpioConf_t * p_vector_gpioConf, gpioConf_t * p_vector_gpioConf_selector)
 {
 	//Primero inicializo el vector selector
@@ -130,7 +143,6 @@ uint8_t mostrarValorPorDisplay(uint32_t valor, uint8_t cantDigitos, gpioConf_t *
 	//Despues, deberia ir jugando con las llaves selectoras para mostrar cada digito en la pantalla lcd correspondiente
 	return 1; 
 }
-
 
 /*==================[external functions definition]==========================*/
 void app_main(void)
