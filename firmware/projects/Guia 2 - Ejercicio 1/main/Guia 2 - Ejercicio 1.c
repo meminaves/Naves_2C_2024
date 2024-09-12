@@ -35,14 +35,13 @@
 
 /*==================[macros and definitions]=================================*/
 int MEDIDA;
-bool ON;
-bool HOLD;
+bool ON = true;
+bool HOLD = false;
 
 #define CONFIG_BLINK_PERIOD_LED 500
 #define RETARDO_MOSTRAR 500
 #define RETARDO_MEDIR 1000
-#define RETARDO_TECLAS 100
-
+#define RETARDO_TECLAS 300
 
 /*==================[internal data definition]===============================*/
 TaskHandle_t taskMostrarMedida_task_handle = NULL;
@@ -51,8 +50,6 @@ TaskHandle_t taskTomarMedida_task_handle = NULL;
 /*==================[internal functions declaration]=========================*/
 static void manejarLeds()
 {
-    while(true)
-	{
 		LedsOffAll();
 
 		if (MEDIDA < 10)
@@ -81,31 +78,30 @@ static void manejarLeds()
 		}
 
 		vTaskDelay(CONFIG_BLINK_PERIOD_LED / portTICK_PERIOD_MS);
-    }
 }
-static void taskMostrarMedida(void *pvParameter){
-
-	LcdItsE0803Write(MEDIDA);
-	
+static void taskMostrarMedida(void *pvParameter)
+{
 	while (true)
 	{
+		printf("tarea mostrar medida\n");
 		if (ON == true)
 		{
 			manejarLeds();
-
+			printf("hold;%d\n", HOLD); 
+			
 			if (HOLD == false)
 			{
 				LcdItsE0803Write(MEDIDA);
-				printf("Hola");
+				printf("medida;%d\n", MEDIDA); 
 			}
 		}
 
 		else 
 		{
-			LcdItsE0803Off();
-			LedsOffAll();
+				LcdItsE0803Off();
+				LedsOffAll();
 		}
-
+		
 		vTaskDelay(RETARDO_MOSTRAR / portTICK_PERIOD_MS);
 	}
 }
@@ -114,17 +110,17 @@ static void taskTomarMedida(void *pvParameter)
 {
 	while(true)
 	{
+		printf("tarea tomar medida\n");
 		MEDIDA = HcSr04ReadDistanceInCentimeters();
-		printf("medida;%d/n", MEDIDA); 
 		vTaskDelay(RETARDO_MEDIR / portTICK_PERIOD_MS);
 	}
 }
 
 static void taskManejarTeclas(void *pvParameter)
 {
-
 	while(1)    
 	{
+		printf("tarea manejar teclas\n");
 		uint8_t teclas;
     	teclas  = SwitchesRead();
     	switch(teclas)
@@ -138,6 +134,7 @@ static void taskManejarTeclas(void *pvParameter)
     		case SWITCH_2:
 			printf("Tecla 2\n");
 			HOLD = !HOLD;
+
     		break;
 		}
 		vTaskDelay(RETARDO_TECLAS / portTICK_PERIOD_MS);
@@ -148,13 +145,14 @@ static void taskManejarTeclas(void *pvParameter)
 void app_main(void)
 {
 	LedsInit();
+	LcdItsE0803Init();
 	HcSr04Init(GPIO_3, GPIO_2);
 	SwitchesInit();
-	LcdItsE0803Init();
+	LcdItsE0803Write(77);
 
-	xTaskCreate(&taskMostrarMedida, "Manejar Leds", 2048, NULL, 5, &taskMostrarMedida_task_handle);
 	xTaskCreate(&taskManejarTeclas, "Manejar Teclas", 2048, NULL, 5, &taskManejarTeclas_task_handle);
 	xTaskCreate(&taskTomarMedida, "Tomar Medida", 2048, NULL, 5, &taskTomarMedida_task_handle); 
+	xTaskCreate(&taskMostrarMedida, "Manejar Leds", 2048, NULL, 5, &taskMostrarMedida_task_handle);
 }
 
 /*==================[end of file]============================================*/
