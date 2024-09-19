@@ -1,4 +1,4 @@
-/*! @mainpage Guia 2 Ejercicio 1
+/*! @mainpage Guia 2 Ejercicio 3
  *
  * @section Descripción
  *
@@ -32,6 +32,7 @@
 #include "led.h"
 #include "switch.h"
 #include "timer_mcu.h"
+#include "uart_mcu.h"
 #include <gpio_mcu.h>
 
 /*==================[macros and definitions]=================================*/
@@ -48,7 +49,7 @@ bool HOLD = false;
 /*==================[internal data definition]===============================*/
 TaskHandle_t taskMostrarMedida_task_handle = NULL;
 TaskHandle_t taskTomarMedida_task_handle = NULL;
-
+TaskHandle_t uart_task_handle = NULL;
 /*==================[internal functions declaration]=========================*/
 /**
  * @brief Función invocada en la interrupción del timer A
@@ -98,6 +99,15 @@ static void manejarLeds()
 			LedOn(LED_3);
 		}
 }
+
+void UartTask(void *pvParameter)
+{
+	while(true)
+	{
+		UartSendString(UART_PC, "Hello World");
+		vTaskDelay(1000/portTICK_PERIOD_MS);
+	}
+}
 static void taskMostrarMedida(void *pvParameter)
 {
 	while (true)
@@ -129,6 +139,8 @@ static void taskTomarMedida(void *pvParameter)
 	{
 		printf("tarea tomar medida\n");
 		MEDIDA = HcSr04ReadDistanceInCentimeters();
+		UartItoa(MEDIDA,10);
+		UartSendString(UART_PC,MEDIDA);
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 	}
 }
@@ -158,11 +170,18 @@ void app_main(void)
         .func_p = FuncTimerTomarMedida,
         .param_p = NULL
     };
-
-    TimerInit(&timer_tomar_medida);
+	TimerInit(&timer_tomar_medida);
+	serial_config_t my_uart = {
+		.port = UART_PC,
+		.baud_rate = 9600,
+		.func_p = NULL,
+		.param_p = NULL
+	};
+	UartInit(&my_uart);
 
 	xTaskCreate(&taskTomarMedida, "Tomar Medida", 2048, NULL, 5, &taskTomarMedida_task_handle); 
 	xTaskCreate(&taskMostrarMedida, "Manejar Leds", 2048, NULL, 5, &taskMostrarMedida_task_handle);
+	xTaskCreate(&UartTask, "UART", 512, &my_uart, 5, &uart_task_handle);
 
 	SwitchActivInt(SWITCH_1,*tecla1,NULL); 
 	SwitchActivInt(SWITCH_2,*tecla2,NULL);
