@@ -44,7 +44,8 @@ bool HOLD = false;
 #define RETARDO_MOSTRAR 500
 #define RETARDO_MEDIR 1000
 #define RETARDO_TECLAS 300
-#define CONFIG_BLINK_PERIOD_LED_1_US 1000000
+#define CONFIG_BLINK_PERIOD_TIMER_A 1000000
+#define CONFIG_BLINK_PERIOD_TIMER_B 500000
 
 /*==================[internal data definition]===============================*/
 TaskHandle_t taskMostrarMedida_task_handle = NULL;
@@ -54,8 +55,9 @@ TaskHandle_t uart_task_handle = NULL;
 /**
  * @brief Función invocada en la interrupción del timer A
  */
-void FuncTimerTeclas(void* param){
-    vTaskNotifyGiveFromISR(taskMostrarMedida_task_handle, pdFALSE);  	
+void FuncTimerMostrarMedida(void* param){
+    vTaskNotifyGiveFromISR(taskMostrarMedida_task_handle, pdFALSE);
+	vTaskNotifyGiveFromISR(uart_task_handle,pdFALSE);  	
 }
 
 void FuncTimerTomarMedida(void* param){
@@ -104,8 +106,11 @@ void UartTask(void *pvParameter)
 {
 	while(true)
 	{
-		UartSendString(UART_PC, "Hello World");
-		vTaskDelay(1000/portTICK_PERIOD_MS);
+		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+		UartSendString(UART_PC,(char*)UartItoa(MEDIDA,10));
+		UartSendString(UART_PC, " ");
+		UartSendString(UART_PC, "cm");
+		UartSendString(UART_PC, "\r\n");
 	}
 }
 static void taskMostrarMedida(void *pvParameter)
@@ -139,12 +144,25 @@ static void taskTomarMedida(void *pvParameter)
 	{
 		printf("tarea tomar medida\n");
 		MEDIDA = HcSr04ReadDistanceInCentimeters();
-		UartItoa(MEDIDA,10);
-		UartSendString(UART_PC,MEDIDA);
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 	}
 }
 
+void detectarTeclas()
+{
+	uint8_t tecla;
+	UartReadByte(UART_PC, &tecla);
+	switch (tecla)
+	{
+		case 'O':
+			ON = !ON;
+			break;
+	
+		case 'H':
+			HOLD = !HOLD;
+			break;
+	}
+}
 /*==================[external functions definition]==========================*/
 
 void app_main(void)
@@ -156,37 +174,40 @@ void app_main(void)
 	LcdItsE0803Write(77);
 
 	 /* Inicialización de timers */
-    timer_config_t timer_teclas = {
+    timer_config_t timer_mostrar = {
         .timer = TIMER_A,
-        .period = CONFIG_BLINK_PERIOD_LED_1_US,
-        .func_p = FuncTimerTeclas,
+        .period = CONFIG_BLINK_PERIOD_TIMER_A,
+        .func_p = FuncTimerMostrarMedida,
         .param_p = NULL
     };
-    TimerInit(&timer_teclas);
+    TimerInit(&timer_mostrar);
 
     timer_config_t timer_tomar_medida = {
         .timer = TIMER_B,
-        .period = CONFIG_BLINK_PERIOD_LED_1_US,
+        .period = CONFIG_BLINK_PERIOD_TIMER_B,
         .func_p = FuncTimerTomarMedida,
         .param_p = NULL
     };
 	TimerInit(&timer_tomar_medida);
-	serial_config_t my_uart = {
+
+    //Puerto Serie
+		serial_config_t myUart = {
 		.port = UART_PC,
 		.baud_rate = 9600,
-		.func_p = NULL,
-		.param_p = NULL
+		.func_p = detectarTeclas,
+		.param_p = NULL,
 	};
-	UartInit(&my_uart);
+	
+	UartInit(&myUart);
 
 	xTaskCreate(&taskTomarMedida, "Tomar Medida", 2048, NULL, 5, &taskTomarMedida_task_handle); 
 	xTaskCreate(&taskMostrarMedida, "Manejar Leds", 2048, NULL, 5, &taskMostrarMedida_task_handle);
-	xTaskCreate(&UartTask, "UART", 512, &my_uart, 5, &uart_task_handle);
+	xTaskCreate(&UartTask, "UART", 512, &myUart, 5, &uart_task_handle);
 
-	SwitchActivInt(SWITCH_1,*tecla1,NULL); 
-	SwitchActivInt(SWITCH_2,*tecla2,NULL);
+	//SwitchActivInt(SWITCH_1,*tecla1,NULL); 
+	//SwitchActivInt(SWITCH_2,*tecla2,NULL);
 
-  	TimerStart(timer_teclas.timer);
+  	TimerStart(timer_mostrar.timer);
 	TimerStart(timer_tomar_medida.timer);
 }
 /*==================[end of file]============================================*/
