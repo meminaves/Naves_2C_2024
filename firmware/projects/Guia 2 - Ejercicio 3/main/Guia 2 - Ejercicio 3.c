@@ -64,14 +64,6 @@ void FuncTimerTomarMedida(void* param){
     vTaskNotifyGiveFromISR(taskTomarMedida_task_handle, pdFALSE);    	
 }
 
-void tecla1(){
-	ON = !ON;
-}
-
-void tecla2(){
-	HOLD = !HOLD;
-}
-
 static void manejarLeds()
 {
 		LedsOffAll();
@@ -82,20 +74,20 @@ static void manejarLeds()
 		}
 		else if(MEDIDA>=10 && MEDIDA <= 20)
 		{
-			printf("LED_1 ON\n");
+			//printf("LED_1 ON\n");
 			LedOn(LED_1);
 		}
 		else if(MEDIDA>=20 && MEDIDA <= 30)
 		{
-			printf("LED_1 ON\n");
+			//printf("LED_1 ON\n");
 			LedOn(LED_1);
 
-			printf("LED_2 ON\n");
+			//printf("LED_2 ON\n");
 			LedOn(LED_2);
 		}
 		else 
 		{
-			printf("LED_ON_ALL\n");
+			//printf("LED_ON_ALL\n");
 			LedOn(LED_1);
 			LedOn(LED_2);
 			LedOn(LED_3);
@@ -107,26 +99,31 @@ void UartTask(void *pvParameter)
 	while(true)
 	{
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-		UartSendString(UART_PC,(char*)UartItoa(MEDIDA,10));
-		UartSendString(UART_PC, " ");
-		UartSendString(UART_PC, "cm");
-		UartSendString(UART_PC, "\r\n");
+
+		if(ON == true)
+		{
+			UartSendString(UART_PC,(char*)UartItoa(MEDIDA,10));
+			UartSendString(UART_PC, " ");
+			UartSendString(UART_PC, "cm");
+			UartSendString(UART_PC, "\r\n");
+		}
 	}
 }
+
 static void taskMostrarMedida(void *pvParameter)
 {
 	while (true)
 	{
-		printf("tarea mostrar medida\n");
+		//printf("tarea mostrar medida\n");
 		if (ON == true)
 		{
 			manejarLeds();
-			printf("hold;%d\n", HOLD); 
+			//printf("hold;%d\n", HOLD); 
 			
 			if (HOLD == false)
 			{
 				LcdItsE0803Write(MEDIDA);
-				printf("medida;%d\n", MEDIDA); 
+				//printf("medida;%d\n", MEDIDA); 
 			}
 		}
 		else 
@@ -142,7 +139,6 @@ static void taskTomarMedida(void *pvParameter)
 {
 	while(true)
 	{
-		printf("tarea tomar medida\n");
 		MEDIDA = HcSr04ReadDistanceInCentimeters();
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 	}
@@ -156,10 +152,12 @@ void detectarTeclas()
 	{
 		case 'O':
 			ON = !ON;
+			UartSendByte(UART_PC, (char*)&tecla);
 			break;
 	
 		case 'H':
 			HOLD = !HOLD;
+			UartSendByte(UART_PC, (char*)&tecla);
 			break;
 	}
 }
@@ -197,16 +195,13 @@ void app_main(void)
 		.func_p = detectarTeclas,
 		.param_p = NULL,
 	};
-	
+
 	UartInit(&myUart);
 
 	xTaskCreate(&taskTomarMedida, "Tomar Medida", 2048, NULL, 5, &taskTomarMedida_task_handle); 
 	xTaskCreate(&taskMostrarMedida, "Manejar Leds", 2048, NULL, 5, &taskMostrarMedida_task_handle);
 	xTaskCreate(&UartTask, "UART", 512, &myUart, 5, &uart_task_handle);
-
-	//SwitchActivInt(SWITCH_1,*tecla1,NULL); 
-	//SwitchActivInt(SWITCH_2,*tecla2,NULL);
-
+	
   	TimerStart(timer_mostrar.timer);
 	TimerStart(timer_tomar_medida.timer);
 }
