@@ -77,11 +77,11 @@ TaskHandle_t taskTomarMedida_task_handle = NULL;
 /*==================[internal functions declaration]=========================*/
 
 /**
- * @fn void FuncTimerTeclas(void *param)
+ * @fn void FuncTimerMostrarMedida(void *param)
  * @brief Función invocada por la interrupción del timer A para notificar a la tarea de mostrar la medida.
  * @param param Parámetro de la tarea (no utilizado).
  */
-void FuncTimerTeclas(void* param){
+void FuncTimerMostrarMedida(void* param){
     vTaskNotifyGiveFromISR(taskMostrarMedida_task_handle, pdFALSE);  	
 }
 
@@ -216,13 +216,13 @@ void app_main(void)
 	LcdItsE0803Write(77);
 
 	 /* Inicialización de timers */
-    timer_config_t timer_teclas = {
+    timer_config_t timer_mostrar_medida = {
         .timer = TIMER_A,
         .period = PERIODO,
-        .func_p = FuncTimerTeclas,
+        .func_p = FuncTimerMostrarMedida,
         .param_p = NULL
     };
-    TimerInit(&timer_teclas);
+    TimerInit(&timer_mostrar_medida);
 
     timer_config_t timer_tomar_medida = {
         .timer = TIMER_B,
@@ -242,7 +242,7 @@ void app_main(void)
 	SwitchActivInt(SWITCH_2,*tecla2,NULL);
 
 	/* Inicio de timers */
-  	TimerStart(timer_teclas.timer);
+  	TimerStart(timer_mostrar_medida.timer);
 	TimerStart(timer_tomar_medida.timer);
 }
 /*==================[end of file]============================================*/
