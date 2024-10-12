@@ -1,0 +1,512 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.11.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Guia 2 Ejercicio 4b: Referencia del archivo C:/Repositorios/Naves_2C_2024/firmware/projects/Guia 2 - Ejericio 4b/main/Guia 2 - Ejercicio 4b.c</title>
+<link rel="icon" href="icon.ico" type="image/x-icon" />
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="fiuner.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Guia 2 Ejercicio 4b<span id="projectnumber">&#160;1.0</span>
+   </div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.11.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){initNavTree('_guia_012_01-_01_ejercicio_014b_8c.html',''); initResizable(true); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">defines</a> &#124;
+<a href="#func-members">Funciones</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo Guia 2 - Ejercicio 4b.c</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &quot;freertos/FreeRTOS.h&quot;</code><br />
+<code>#include &quot;freertos/task.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="led_8h_source.html">led.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="switch_8h_source.html">switch.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="timer__mcu_8h_source.html">timer_mcu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="uart__mcu_8h_source.html">uart_mcu.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="analog__io__mcu_8h_source.html">analog_io_mcu.h</a>&quot;</code><br />
+<code>#include &lt;<a class="el" href="gpio__mcu_8h_source.html">gpio_mcu.h</a>&gt;</code><br />
+</div>
+<p><a href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+defines</h2></td></tr>
+<tr class="memitem:a537a598d1427f8eee034823f9791076b" id="r_a537a598d1427f8eee034823f9791076b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a537a598d1427f8eee034823f9791076b">CONFIG_BLINK_PERIOD_TIMER_A</a>&#160;&#160;&#160;20000</td></tr>
+<tr class="memdesc:a537a598d1427f8eee034823f9791076b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Período del temporizador para la lectura ADC en microsegundos.  <br /></td></tr>
+<tr class="separator:a537a598d1427f8eee034823f9791076b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84e8a8202c61d3cca167c527c1f28711" id="r_a84e8a8202c61d3cca167c527c1f28711"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84e8a8202c61d3cca167c527c1f28711">CONFIG_BLINK_PERIOD_TIMER_B</a>&#160;&#160;&#160;40000</td></tr>
+<tr class="memdesc:a84e8a8202c61d3cca167c527c1f28711"><td class="mdescLeft">&#160;</td><td class="mdescRight">Período del temporizador para la simulación de ECG en microsegundos.  <br /></td></tr>
+<tr class="separator:a84e8a8202c61d3cca167c527c1f28711"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b20d41d6252e9871430c242cb1a56e7" id="r_a6b20d41d6252e9871430c242cb1a56e7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>&#160;&#160;&#160;231</td></tr>
+<tr class="memdesc:a6b20d41d6252e9871430c242cb1a56e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tamaño del buffer que almacena la señal ECG.  <br /></td></tr>
+<tr class="separator:a6b20d41d6252e9871430c242cb1a56e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:af523b0e44ceab7c778eac888721787bf" id="r_af523b0e44ceab7c778eac888721787bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af523b0e44ceab7c778eac888721787bf">FuncTimerConversor</a> (void *param)</td></tr>
+<tr class="memdesc:af523b0e44ceab7c778eac888721787bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Función invocada por la interrupción del temporizador para el ADC.  <br /></td></tr>
+<tr class="separator:af523b0e44ceab7c778eac888721787bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36b91703df10d61468418101db6e8f0f" id="r_a36b91703df10d61468418101db6e8f0f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36b91703df10d61468418101db6e8f0f">FuncTimerECG</a> (void *param)</td></tr>
+<tr class="memdesc:a36b91703df10d61468418101db6e8f0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Función invocada por la interrupción del temporizador para el ECG.  <br /></td></tr>
+<tr class="separator:a36b91703df10d61468418101db6e8f0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06977fa801600be8124c4ff3366ac7ef" id="r_a06977fa801600be8124c4ff3366ac7ef"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06977fa801600be8124c4ff3366ac7ef">conversionAD_task</a> (void *param)</td></tr>
+<tr class="memdesc:a06977fa801600be8124c4ff3366ac7ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea encargada de leer el valor del conversor ADC y enviarlo por UART.  <br /></td></tr>
+<tr class="separator:a06977fa801600be8124c4ff3366ac7ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88dc7bddd674913115e5629fd19c196a" id="r_a88dc7bddd674913115e5629fd19c196a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a88dc7bddd674913115e5629fd19c196a">conversionDA_task</a> (void *param)</td></tr>
+<tr class="memdesc:a88dc7bddd674913115e5629fd19c196a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tarea encargada de generar la señal ECG a través del DAC.  <br /></td></tr>
+<tr class="separator:a88dc7bddd674913115e5629fd19c196a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a630544a7f0a2cc40d8a7fefab7e2fe70" id="r_a630544a7f0a2cc40d8a7fefab7e2fe70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a630544a7f0a2cc40d8a7fefab7e2fe70">app_main</a> (void)</td></tr>
+<tr class="memdesc:a630544a7f0a2cc40d8a7fefab7e2fe70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Función principal de la aplicación.  <br /></td></tr>
+<tr class="separator:a630544a7f0a2cc40d8a7fefab7e2fe70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aed6490d554e9f3e4ebff28ef8ffd034b" id="r_aed6490d554e9f3e4ebff28ef8ffd034b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed6490d554e9f3e4ebff28ef8ffd034b">VOLTAJE</a> = 0</td></tr>
+<tr class="memdesc:aed6490d554e9f3e4ebff28ef8ffd034b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable que almacena el valor del voltaje leído.  <br /></td></tr>
+<tr class="separator:aed6490d554e9f3e4ebff28ef8ffd034b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a317a452990e39b968f52b2eb76ef18f8" id="r_a317a452990e39b968f52b2eb76ef18f8"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a317a452990e39b968f52b2eb76ef18f8">conversorAD_task_handle_</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="memdesc:a317a452990e39b968f52b2eb76ef18f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Task handle para la tarea del conversor ADC.  <br /></td></tr>
+<tr class="separator:a317a452990e39b968f52b2eb76ef18f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c94c388521695cd9e3a9cef20e698ba" id="r_a4c94c388521695cd9e3a9cef20e698ba"><td class="memItemLeft" align="right" valign="top">TaskHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c94c388521695cd9e3a9cef20e698ba">conversorDA_task_handle_</a> = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td></tr>
+<tr class="memdesc:a4c94c388521695cd9e3a9cef20e698ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Task handle para la tarea del conversor DAC.  <br /></td></tr>
+<tr class="separator:a4c94c388521695cd9e3a9cef20e698ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dafb8b8179af8e9f4cc4df3f588e42e" id="r_a2dafb8b8179af8e9f4cc4df3f588e42e"><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dafb8b8179af8e9f4cc4df3f588e42e">ecg</a> [<a class="el" href="#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>]</td></tr>
+<tr class="memdesc:a2dafb8b8179af8e9f4cc4df3f588e42e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Señal ECG simulada almacenada en un buffer.  <br /></td></tr>
+<tr class="separator:a2dafb8b8179af8e9f4cc4df3f588e42e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentación de «define»</h2>
+<a id="a6b20d41d6252e9871430c242cb1a56e7" name="a6b20d41d6252e9871430c242cb1a56e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b20d41d6252e9871430c242cb1a56e7">&#9670;&#160;</a></span>BUFFER_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BUFFER_SIZE&#160;&#160;&#160;231</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tamaño del buffer que almacena la señal ECG. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00050">50</a> del archivo <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Guia 2 - Ejercicio 4b.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00144">conversionDA_task()</a>.</p>
+
+</div>
+</div>
+<a id="a537a598d1427f8eee034823f9791076b" name="a537a598d1427f8eee034823f9791076b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a537a598d1427f8eee034823f9791076b">&#9670;&#160;</a></span>CONFIG_BLINK_PERIOD_TIMER_A</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_BLINK_PERIOD_TIMER_A&#160;&#160;&#160;20000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Período del temporizador para la lectura ADC en microsegundos. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00044">44</a> del archivo <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Guia 2 - Ejercicio 4b.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00174">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a84e8a8202c61d3cca167c527c1f28711" name="a84e8a8202c61d3cca167c527c1f28711"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84e8a8202c61d3cca167c527c1f28711">&#9670;&#160;</a></span>CONFIG_BLINK_PERIOD_TIMER_B</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CONFIG_BLINK_PERIOD_TIMER_B&#160;&#160;&#160;40000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Período del temporizador para la simulación de ECG en microsegundos. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00047">47</a> del archivo <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Guia 2 - Ejercicio 4b.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00174">app_main()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentación de funciones</h2>
+<a id="a630544a7f0a2cc40d8a7fefab7e2fe70" name="a630544a7f0a2cc40d8a7fefab7e2fe70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a630544a7f0a2cc40d8a7fefab7e2fe70">&#9670;&#160;</a></span>app_main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void app_main </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Función principal de la aplicación. </p>
+<p>Esta función inicializa el temporizador, la UART, el ADC y el DAC. Luego crea las tareas encargadas de realizar la conversión ADC periódicamente y de generar la señal ECG utilizando el DAC. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00174">174</a> del archivo <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Guia 2 - Ejercicio 4b.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="analog__io__mcu_8h_source.html#l00038">ADC_SINGLE</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00045">AnalogInputInit()</a>, <a class="el" href="analog__io__mcu_8c_source.html#l00120">AnalogOutputInit()</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00033">CH2</a>, <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00044">CONFIG_BLINK_PERIOD_TIMER_A</a>, <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00047">CONFIG_BLINK_PERIOD_TIMER_B</a>, <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00123">conversionAD_task()</a>, <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00144">conversionDA_task()</a>, <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00056">conversorAD_task_handle_</a>, <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00059">conversorDA_task_handle_</a>, <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00072">FuncTimerConversor()</a>, <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00086">FuncTimerECG()</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00049">analog_input_config_t::input</a>, <a class="el" href="ili9341_8c_source.html#l00019">NULL</a>, <a class="el" href="uart__mcu_8h_source.html#l00039">serial_config_t::port</a>, <a class="el" href="timer__mcu_8h_source.html#l00040">timer_config_t::timer</a>, <a class="el" href="timer__mcu_8h_source.html#l00032">TIMER_A</a>, <a class="el" href="timer__mcu_8h_source.html#l00033">TIMER_B</a>, <a class="el" href="timer__mcu_8c_source.html#l00067">TimerInit()</a>, <a class="el" href="timer__mcu_8c_source.html#l00116">TimerStart()</a>, <a class="el" href="uart__mcu_8h_source.html#l00032">UART_PC</a> y <a class="el" href="uart__mcu_8c_source.html#l00107">UartInit()</a>.</p>
+
+</div>
+</div>
+<a id="a06977fa801600be8124c4ff3366ac7ef" name="a06977fa801600be8124c4ff3366ac7ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06977fa801600be8124c4ff3366ac7ef">&#9670;&#160;</a></span>conversionAD_task()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void conversionAD_task </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>param</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tarea encargada de leer el valor del conversor ADC y enviarlo por UART. </p>
+<p>Esta tarea espera a ser notificada por la interrupción del temporizador. Una vez notificada, lee el valor analógico del canal ADC 2 y lo convierte a un valor digital que luego se envía al puerto UART.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">param</td><td>Parámetro no utilizado. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00123">123</a> del archivo <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Guia 2 - Ejercicio 4b.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="analog__io__mcu_8c_source.html#l00130">AnalogInputReadSingle()</a>, <a class="el" href="analog__io__mcu_8h_source.html#l00033">CH2</a>, <a class="el" href="uart__mcu_8h_source.html#l00032">UART_PC</a>, <a class="el" href="uart__mcu_8c_source.html#l00222">UartItoa()</a>, <a class="el" href="uart__mcu_8c_source.html#l00193">UartSendString()</a> y <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00053">VOLTAJE</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00174">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a88dc7bddd674913115e5629fd19c196a" name="a88dc7bddd674913115e5629fd19c196a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88dc7bddd674913115e5629fd19c196a">&#9670;&#160;</a></span>conversionDA_task()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void conversionDA_task </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>param</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tarea encargada de generar la señal ECG a través del DAC. </p>
+<p>Esta tarea espera a ser notificada por la interrupción del temporizador. Una vez notificada, envía el siguiente valor de la señal ECG al DAC. Cuando el buffer llega al final, se reinicia el contador.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">param</td><td>Parámetro no utilizado. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00144">144</a> del archivo <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Guia 2 - Ejercicio 4b.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="analog__io__mcu_8c_source.html#l00159">AnalogOutputWrite()</a>, <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00050">BUFFER_SIZE</a> y <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00092">ecg</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00174">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="af523b0e44ceab7c778eac888721787bf" name="af523b0e44ceab7c778eac888721787bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af523b0e44ceab7c778eac888721787bf">&#9670;&#160;</a></span>FuncTimerConversor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FuncTimerConversor </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>param</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Función invocada por la interrupción del temporizador para el ADC. </p>
+<p>Esta función es llamada cuando el temporizador A genera una interrupción. Despierta la tarea encargada de realizar la conversión ADC.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">param</td><td>Parámetro no utilizado. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00072">72</a> del archivo <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Guia 2 - Ejercicio 4b.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00056">conversorAD_task_handle_</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00174">app_main()</a>.</p>
+
+</div>
+</div>
+<a id="a36b91703df10d61468418101db6e8f0f" name="a36b91703df10d61468418101db6e8f0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36b91703df10d61468418101db6e8f0f">&#9670;&#160;</a></span>FuncTimerECG()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void FuncTimerECG </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>param</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Función invocada por la interrupción del temporizador para el ECG. </p>
+<p>Esta función es llamada cuando el temporizador B genera una interrupción. Despierta la tarea encargada de generar la señal ECG.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">param</td><td>Parámetro no utilizado </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00086">86</a> del archivo <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Guia 2 - Ejercicio 4b.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00059">conversorDA_task_handle_</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00174">app_main()</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentación de variables</h2>
+<a id="a317a452990e39b968f52b2eb76ef18f8" name="a317a452990e39b968f52b2eb76ef18f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a317a452990e39b968f52b2eb76ef18f8">&#9670;&#160;</a></span>conversorAD_task_handle_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t conversorAD_task_handle_ = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Task handle para la tarea del conversor ADC. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00056">56</a> del archivo <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Guia 2 - Ejercicio 4b.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00174">app_main()</a> y <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00072">FuncTimerConversor()</a>.</p>
+
+</div>
+</div>
+<a id="a4c94c388521695cd9e3a9cef20e698ba" name="a4c94c388521695cd9e3a9cef20e698ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c94c388521695cd9e3a9cef20e698ba">&#9670;&#160;</a></span>conversorDA_task_handle_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TaskHandle_t conversorDA_task_handle_ = <a class="el" href="ili9341_8c.html#a070d2ce7b6bb7e5c05602aa8c308d0c4">NULL</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Task handle para la tarea del conversor DAC. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00059">59</a> del archivo <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Guia 2 - Ejercicio 4b.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00174">app_main()</a> y <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00086">FuncTimerECG()</a>.</p>
+
+</div>
+</div>
+<a id="a2dafb8b8179af8e9f4cc4df3f588e42e" name="a2dafb8b8179af8e9f4cc4df3f588e42e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dafb8b8179af8e9f4cc4df3f588e42e">&#9670;&#160;</a></span>ecg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char ecg[<a class="el" href="#a6b20d41d6252e9871430c242cb1a56e7">BUFFER_SIZE</a>]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valor inicial:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    76, 77, 78, 77, 79, 86, 81, 76, 84, 93, 85, 80,</div>
+<div class="line">    89, 95, 89, 85, 93, 98, 94, 88, 98, 105, 96, 91,</div>
+<div class="line">    99, 105, 101, 96, 102, 106, 101, 96, 100, 107, 101,</div>
+<div class="line">    94, 100, 104, 100, 91, 99, 103, 98, 91, 96, 105, 95,</div>
+<div class="line">    88, 95, 100, 94, 85, 93, 99, 92, 84, 91, 96, 87, 80,</div>
+<div class="line">    83, 92, 86, 78, 84, 89, 79, 73, 81, 83, 78, 70, 80, 82,</div>
+<div class="line">    79, 69, 80, 82, 81, 70, 75, 81, 77, 74, 79, 83, 82, 72,</div>
+<div class="line">    80, 87, 79, 76, 85, 95, 87, 81, 88, 93, 88, 84, 87, 94,</div>
+<div class="line">    86, 82, 85, 94, 85, 82, 85, 95, 86, 83, 92, 99, 91, 88,</div>
+<div class="line">    94, 98, 95, 90, 97, 105, 104, 94, 98, 114, 117, 124, 144,</div>
+<div class="line">    180, 210, 236, 253, 227, 171, 99, 49, 34, 29, 43, 69, 89,</div>
+<div class="line">    89, 90, 98, 107, 104, 98, 104, 110, 102, 98, 103, 111, 101,</div>
+<div class="line">    94, 103, 108, 102, 95, 97, 106, 100, 92, 101, 103, 100, 94, 98,</div>
+<div class="line">    103, 96, 90, 98, 103, 97, 90, 99, 104, 95, 90, 99, 104, 100, 93,</div>
+<div class="line">    100, 106, 101, 93, 101, 105, 103, 96, 105, 112, 105, 99, 103, 108,</div>
+<div class="line">    99, 96, 102, 106, 99, 90, 92, 100, 87, 80, 82, 88, 77, 69, 75, 79,</div>
+<div class="line">    74, 67, 71, 78, 72, 67, 73, 81, 77, 71, 75, 84, 79, 77, 77, 76, 76,</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+<p>Señal ECG simulada almacenada en un buffer. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00092">92</a> del archivo <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Guia 2 - Ejercicio 4b.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00144">conversionDA_task()</a>.</p>
+
+</div>
+</div>
+<a id="aed6490d554e9f3e4ebff28ef8ffd034b" name="aed6490d554e9f3e4ebff28ef8ffd034b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed6490d554e9f3e4ebff28ef8ffd034b">&#9670;&#160;</a></span>VOLTAJE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t VOLTAJE = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Variable que almacena el valor del voltaje leído. </p>
+
+<p class="definition">Definición en la línea <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00053">53</a> del archivo <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html">Guia 2 - Ejercicio 4b.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="_guia_012_01-_01_ejercicio_014b_8c_source.html#l00123">conversionAD_task()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_d9edf6c004b4a7ff14fe9ae7a92214ee.html">firmware</a></li><li class="navelem"><a class="el" href="dir_429d80758da54da73083af4edd40d0b3.html">projects</a></li><li class="navelem"><a class="el" href="dir_ecf26940914ce169b71f21bfbad61fcc.html">Guia 2 - Ejericio 4b</a></li><li class="navelem"><a class="el" href="dir_ff533466ad44cbeeeafbf46f40ad0daa.html">main</a></li><li class="navelem"><a class="el" href="_guia_012_01-_01_ejercicio_014b_8c.html">Guia 2 - Ejercicio 4b.c</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.11.0 </li>
+  </ul>
+</div>
+</body>
+</html>
