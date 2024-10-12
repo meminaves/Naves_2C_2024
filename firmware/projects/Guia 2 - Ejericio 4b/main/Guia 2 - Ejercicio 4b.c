@@ -1,16 +1,20 @@
-/*! @mainpage Template
+/*! @mainpage Guia 2 Ejercicio 4b
  *
- * @section genDesc General Description
+ * Medidor de Voltaje y Simulador de Señal ECG
  *
- * This section describes how the program works.
+ * @section genDesc Descripción General
  *
- * <a href="https://drive.google.com/...">Operation Example</a>
+ * Este programa mide el voltaje usando el conversor ADC del ESP32, 
+ * lo envía por UART y simula una señal de ECG utilizando un conversor DAC. 
+ * Las lecturas de voltaje se realizan a intervalos configurados por un temporizador, 
+ * y la señal ECG se genera de manera periódica utilizando otro temporizador.
  *
- * @section hardConn Hardware Connection
+ * @section hardConn Conexiones de Hardware
  *
- * |    Peripheral  |   ESP32   	|
+ * |    Periférico  |   ESP32   	|
  * |:--------------:|:--------------|
- * | 	PIN_X	 	| 	GPIO_X		|
+ * | 	ADC_CH2		| 	GPIO_2		|
+ * | 	DAC_OUT		| 	GPIO_0		|
  *
  *
  * @section changelog Changelog
@@ -19,7 +23,7 @@
  * |:----------:|:-----------------------------------------------|
  * | 12/09/2023 | Document creation		                         |
  *
- * @author Albano Peñalva (albano.penalva@uner.edu.ar)
+ * @author Maria Emilia Naves 
  *
  */
 
@@ -35,25 +39,56 @@
 #include "analog_io_mcu.h"
 #include <gpio_mcu.h>
 /*==================[macros and definitions]=================================*/
+
+/*! @brief Período del temporizador para la lectura ADC en microsegundos */
 #define CONFIG_BLINK_PERIOD_TIMER_A 20000
+
+/*! @brief Período del temporizador para la simulación de ECG en microsegundos */
 #define CONFIG_BLINK_PERIOD_TIMER_B 40000
+
+/*! @brief Tamaño del buffer que almacena la señal ECG */
 #define BUFFER_SIZE 231
 
-
+/*! @brief Variable que almacena el valor del voltaje leído */
 uint16_t VOLTAJE = 0;
+
+/*! @brief Task handle para la tarea del conversor ADC */
 TaskHandle_t conversorAD_task_handle_ = NULL;
+
+/*! @brief Task handle para la tarea del conversor DAC */
 TaskHandle_t conversorDA_task_handle_ = NULL;
 
 /*==================[internal data definition]===============================*/
+
+/**
+ * @fn void FuncTimerConversor(void* param)
+ * @brief Función invocada por la interrupción del temporizador para el ADC.
+ *
+ * Esta función es llamada cuando el temporizador A genera una interrupción.
+ * Despierta la tarea encargada de realizar la conversión ADC.
+ *
+ * @param param Parámetro no utilizado.
+ */
 void FuncTimerConversor(void* param)
 {
     vTaskNotifyGiveFromISR(conversorAD_task_handle_, pdFALSE);      	
 }
+
+/**
+ * @fn void FuncTimerECG(void *param)
+ * @brief Función invocada por la interrupción del temporizador para el ECG.
+ *
+ * Esta función es llamada cuando el temporizador B genera una interrupción.
+ * Despierta la tarea encargada de generar la señal ECG.
+ *
+ * @param param Parámetro no utilizado
+ */
 void FuncTimerECG(void *param)
 {
 	vTaskNotifyGiveFromISR(conversorDA_task_handle_, pdFALSE); 
 }
-TaskHandle_t main_task_handle = NULL;
+
+/*! @brief Señal ECG simulada almacenada en un buffer */
 const char ecg[BUFFER_SIZE] = {
     76, 77, 78, 77, 79, 86, 81, 76, 84, 93, 85, 80,
     89, 95, 89, 85, 93, 98, 94, 88, 98, 105, 96, 91,
@@ -74,7 +109,19 @@ const char ecg[BUFFER_SIZE] = {
     74, 67, 71, 78, 72, 67, 73, 81, 77, 71, 75, 84, 79, 77, 77, 76, 76,
 };
 /*==================[internal functions declaration]=========================*/
-static void conversionAD_task(void* param){
+
+/**
+ * @fn static void conversionAD_task(void* param)
+ * @brief Tarea encargada de leer el valor del conversor ADC y enviarlo por UART.
+ *
+ * Esta tarea espera a ser notificada por la interrupción del temporizador.
+ * Una vez notificada, lee el valor analógico del canal ADC 2 y lo convierte 
+ * a un valor digital que luego se envía al puerto UART.
+ *
+ * @param param Parámetro no utilizado.
+ */
+static void conversionAD_task(void* param)
+{
 	while (true)
 	{
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
@@ -83,6 +130,17 @@ static void conversionAD_task(void* param){
 		UartSendString(UART_PC, "\r\n");
 	}
 }
+
+/**
+ * @fn static void conversionDA_task(void*param)
+ * @brief Tarea encargada de generar la señal ECG a través del DAC.
+ *
+ * Esta tarea espera a ser notificada por la interrupción del temporizador.
+ * Una vez notificada, envía el siguiente valor de la señal ECG al DAC.
+ * Cuando el buffer llega al final, se reinicia el contador.
+ *
+ * @param param Parámetro no utilizado.
+ */
 static void conversionDA_task(void*param)
 {
 	uint16_t  contador_ecg= 0;
@@ -91,7 +149,6 @@ static void conversionDA_task(void*param)
 		printf("Entra");
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		
-
 		if (contador_ecg<BUFFER_SIZE)
 		{
 			AnalogOutputWrite(ecg[contador_ecg]);
@@ -105,9 +162,18 @@ static void conversionDA_task(void*param)
 }
 
 /*==================[external functions definition]==========================*/
+
+/**
+ * @fn void app_main(void)
+ * @brief Función principal de la aplicación.
+ *
+ * Esta función inicializa el temporizador, la UART, el ADC y el DAC.
+ * Luego crea las tareas encargadas de realizar la conversión ADC periódicamente 
+ * y de generar la señal ECG utilizando el DAC.
+ */
 void app_main(void)
 {
-		 /* Inicialización de timers */
+	/* Inicialización de timers */
     timer_config_t timer_conversor = {
         .timer = TIMER_A,
         .period = CONFIG_BLINK_PERIOD_TIMER_A,
@@ -126,13 +192,17 @@ void app_main(void)
 	TimerInit(&timer_ECG);
 	TimerStart(timer_ECG.timer);
 
+	/* Configuración del ADC */
 	analog_input_config_t conversorAD = {
 		.input = CH2,
 		.mode = ADC_SINGLE,
 	};
 	AnalogInputInit(&conversorAD);
+
+	/* Inicialización del DAC */
 	AnalogOutputInit();
 
+	/* Configuración del puerto UART */
 	serial_config_t myUart = {
 		.port = UART_PC,
 		.baud_rate = 115200,
@@ -141,6 +211,7 @@ void app_main(void)
 	};
 	UartInit(&myUart);
 
+	/* Creación de tareas */
 	xTaskCreate(&conversionAD_task, "ConversorAD", 2048, NULL, 5, &conversorAD_task_handle_);
 	xTaskCreate(&conversionDA_task, "ConversorDA", 2048, NULL, 5, &conversorDA_task_handle_);
 }
