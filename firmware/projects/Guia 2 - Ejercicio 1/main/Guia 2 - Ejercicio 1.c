@@ -89,13 +89,12 @@ TaskHandle_t taskMostrarMedida_task_handle = NULL;
  */
 TaskHandle_t taskManejarTeclas_task_handle = NULL;
 
-
 /**
  * @brief task handle de la tarea que toma las medidas de distancia
  */
 TaskHandle_t taskTomarMedida_task_handle = NULL;
-/*==================[internal functions declaration]=========================*/
 
+/*==================[internal functions declaration]=========================*/
 /**
  * @fn static void manejarLeds()
  * @brief Controla el encendido de los LEDs según la distancia medida
@@ -136,7 +135,6 @@ static void manejarLeds()
 
 		vTaskDelay(CONFIG_BLINK_PERIOD_LED / portTICK_PERIOD_MS);
 }
-
 /**
  * @fn static void taskMostrarMedida(void *pvParameter)
  * @brief Tarea que muestra la medida en la pantalla y maneja los LEDs
@@ -172,13 +170,10 @@ static void taskMostrarMedida(void *pvParameter)
 		vTaskDelay(RETARDO_MOSTRAR / portTICK_PERIOD_MS);
 	}
 }
-
 /**
  * @fn taskTomarMedida(void *pvParameter)
  * @brief Tarea que toma las medidas de distancia utilizando el sensor ultrasónico
- *
  * La medida se almacena en la variable global MEDIDA.
- *
  * @param pvParameter Parámetro de la tarea (no utilizado)
  */
 static void taskTomarMedida(void *pvParameter)
@@ -190,13 +185,10 @@ static void taskTomarMedida(void *pvParameter)
 		vTaskDelay(RETARDO_MEDIR / portTICK_PERIOD_MS);
 	}
 }
-
 /**
  * @fn static void taskManejarTeclas(void *pvParameter)
  * @brief Tarea que maneja las teclas para encender/apagar el sistema o activar/desactivar HOLD
- *
  * Detecta el estado de las teclas y cambia las variables ON y HOLD en función de las entradas.
- *
  * @param pvParameter Parámetro de la tarea (no utilizado)
  */
 static void taskManejarTeclas(void *pvParameter)
