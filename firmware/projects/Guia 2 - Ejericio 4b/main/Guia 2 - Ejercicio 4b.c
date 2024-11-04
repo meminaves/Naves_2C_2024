@@ -125,7 +125,7 @@ static void conversionAD_task(void* param)
 	while (true)
 	{
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-		AnalogInputReadSingle(CH2, &VOLTAJE);
+		AnalogInputReadSingle(CH2, &VOLTAJE); //Conversión analógica a digital
 		UartSendString(UART_PC, (char*)UartItoa(VOLTAJE,10));
 		UartSendString(UART_PC, "\r\n");
 	}
