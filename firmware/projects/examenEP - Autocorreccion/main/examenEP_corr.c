@@ -363,25 +363,31 @@ static void taskMedirAceleracion()
 /*==================[external functions definition]==========================*/
 void app_main(void){
 	
+	//Falto inicializar el HCSR
+	HcSr04Init(GPIO_7, GPIO_8); 
+
 	inicializarBuzzer();
+
 	inicializarAcelerometro();
 
-	    timer_config_t timer_tomar_distancia = {
+	//Me faltó cambiar el nombre de cada timer :'D
+
+	timer_config_t timer_medir_aceleracion = {
+        .timer = TIMER_A,
+        .period = CONFIG_BLINK_PERIOD_TIMER_A,
+        .func_p = FuncTimerMedirAceleracion,
+        .param_p = NULL
+    };
+
+		timer_config_t timer_tomar_distancia = {
         .timer = TIMER_B,
         .period = CONFIG_BLINK_PERIOD_TIMER_B,
         .func_p = FuncTimerTomarDistancia,
         .param_p = NULL
     };
 
-		timer_config_t timer_medir_aceleracion = {
-        .timer = TIMER_B,
-        .period = CONFIG_BLINK_PERIOD_TIMER_A,
-        .func_p = FuncTimerMedirAceleracion,
-        .param_p = NULL
-    };
-
-		timer_config_t timer_sistema= {
-        .timer = TIMER_B,
+	timer_config_t timer_sistema= {
+        .timer = TIMER_C,
         .period = CONFIG_BLINK_PERIOD_TIMER_C,
         .func_p = FuncTimerManejarSistema,
         .param_p = NULL
