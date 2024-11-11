@@ -15,9 +15,10 @@
  * |  LED 1        | GPIO_20      |
  * |  LED 2        | GPIO_21      |
  * |  LED 3        | GPIO_22      |
- * |  Switch 1     | GPIO_4       |
- * |  Switch 2     | GPIO_15      |
- * |  UART         | Conexión UART_PC    |
+ * |  UART         | UART_PC      |
+ * |  Barrera      | GPIO_6       |
+ * |   ADC_CH0     | GPIO_0		  |
+ * |   ADC_CH1     | GPIO_1		  |
  *
  *
  * @section changelog Changelog
@@ -72,6 +73,9 @@ int PESO;
 
 /*! @brief Canal destinado a la lectura ADC de la galga 2*/
 #define CH_GALGA2 CH1
+
+/*! @brief GPIO al cual está conectada la barrera*/
+#define GPIO_BARRERA GPIO_6 
 
 /*! @brief Vector que almacena las 50 mediciones de peso de la galga 1*/
 float PESOS_GALGA_1 [BUFFER_SIZE];
@@ -206,6 +210,7 @@ static void pesarVehiculoTask(void*param)
 			{
 				float Promedio1 = 0;
 				float Promedio2 = 0;
+
 				contador = 0;
 
 				for (int i = 0; i < BUFFER_SIZE; i++)
@@ -218,16 +223,70 @@ static void pesarVehiculoTask(void*param)
 				float PESO_PROMEDIO_2 = Promedio2 / BUFFER_SIZE;
 
 				PESO = PESO_PROMEDIO_1 + PESO_PROMEDIO_2;
+
+				UartSendString(UART_PC, "Peso: ");
+				UartSendString(UART_PC, (char*)UartItoa(PESO,10));
+				UartSendString(UART_PC, "kg");
+				UartSendString(UART_PC, "\n");
+
+				UartSendString(UART_PC, "Velocidad Maxima: ");
+				UartSendString(UART_PC, (char*)UartItoa(VELOCIDAD_MAX,10));
+				UartSendString(UART_PC, "m/s");
+				UartSendString(UART_PC, "\n");
+
 			}
 		}
 	}
 }
+/**
+ * @fn void manejarBarrera()
+ * @brief Función para detectar las teclas ingresadas por UART.
+ * Abre o cierra la barrera al recibir comandos por UART ("o": open, "c": close).
+ */
+void manejarBarrera()
+{
+	uint8_t tecla;
+	UartReadByte(UART_PC, &tecla);
+	switch (tecla)
+	{
+		case 'o':	
+			GPIOOn(GPIO_BARRERA);
+			UartSendByte(UART_PC, (char*)&tecla);
+			break;
+	
+		case 'c':
+			GPIOOff(GPIO_BARRERA);
+			UartSendByte(UART_PC, (char*)&tecla);
+			break;
+	}
+}
 /*==================[external functions definition]==========================*/
+
+/**
+ * @fn void app_main(void)
+ * @brief Función principal de la aplicación.
+ *
+ * Esta función inicializa los temporizadores, la UART, los conversores AD, el gpio de la barrera,
+ * el HCSR y los leds.
+ * Luego crea las tareas encargadas de pesar el vehículo y de medir su velocidad
+ * 
+ */
+
 void app_main(void)
 {
 	/*Inicialización de periféricos*/
 	HcSr04Init(GPIO_3, GPIO_2); 
 	LedsInit();
+	GPIOInit(GPIO_6, GPIO_OUTPUT);
+
+	/*Inicializacion de UART*/
+	serial_config_t myUart = {
+		.port = UART_PC,
+		.baud_rate = 9600,
+		.func_p = manejarBarrera,
+		.param_p = NULL,
+	};
+	UartInit(&myUart);
 	
 	/*Inicialización de conversores analógicos-digitales*/
 	analog_input_config_t galga_config1 = {
