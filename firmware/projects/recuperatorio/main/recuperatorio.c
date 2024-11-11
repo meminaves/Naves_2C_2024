@@ -1,11 +1,13 @@
 /*! @mainpage Recuperatorio EP
  *
- * @section genDesc General Description
+ * @section Sistema de pesaje de camiones
  *
- * This section describes how the program works.
- *
- * <a href="https://drive.google.com/...">Operation Example</a>
- *
+ * El sistema se encarga de verificar la velocidad de ingreso del 
+ * vehiculo. Además, maneja los leds en función de la velocidad detectada.
+ * Una vez el vehículo se detuvo, se pesa, y se informa el peso por uart junto a 
+ * la velocidad máxima registrada. 
+ * Además, se controla la apertura y cierre de la barrera por UART.
+ * 
  * @section hardConn Hardware Connection
  * 
  * | Peripheral    | ESP32        |
@@ -30,7 +32,6 @@
  * @author Maria Emilia Naves
  *
  */
-
 /*==================[inclusions]=============================================*/
 #include <stdio.h>
 #include <stdint.h>
@@ -59,7 +60,7 @@ float VELOCIDAD_MAX;
 /*! @brief Variable que almacena el peso del vehículo*/
 int PESO;
 
-/*! @brief Período del temporizador para la lectura de la velocidad. En este caso 0,1 s (100000 us)*/
+/*! @brief Período del temporizador para la lectura de la velocidad. En este caso 100000 us (10 muestras por segundo)*/
 #define CONFIG_BLINK_PERIOD_TIMER_B 100000 
 
 /*! @brief Período del temporizador para la lectura del peso del vehiculo. En este caso 5000 us (200 muestras por segundo)*/
@@ -90,6 +91,7 @@ TaskHandle_t taskMedirVelocidad_task_handle = NULL;
 
 /*! @brief Task handle para la tarea Pesar Vehiculo */
 TaskHandle_t taskPesarVehiculo_task_handle = NULL;
+
 /*==================[internal functions declaration]=========================*/
 /**
  * @fn void FuncTimerMedirVelocidad(void* param)
@@ -141,9 +143,10 @@ void controlarLeds()
 }
 /**
  * @fn taskMedirVelocidad(void *pvParameter)
- * @brief Tarea que toma las medidas de distancia utilizando el sensor ultrasónico y además utiliza estas mismas para calcular la velocidad del vehículo
- *
- * La medida se almacena en la variable global .
+ * @brief Tarea que toma las medidas de distancia utilizando el sensor ultrasónico 10 veces por segundo y además 
+ * utiliza estas mismas para calcular la velocidad del vehículo.La medida se almacena en la variable global 
+ * VELOCIDAD. Además, registra la velocidad máxima del vehículo al ser detectado a una distancia menor a 10 metros 
+ * y la almacena en la variable global VELOCIDAD_MAX
  *
  * @param pvParameter Parámetro de la tarea (no utilizado)
  */
@@ -187,6 +190,7 @@ static void taskMedirVelocidad(void *pvParameter)
 static void pesarVehiculoTask(void*param)
 {
 	uint16_t  contador = 0;
+
 	while (true)
 	{
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
@@ -233,7 +237,6 @@ static void pesarVehiculoTask(void*param)
 				UartSendString(UART_PC, (char*)UartItoa(VELOCIDAD_MAX,10));
 				UartSendString(UART_PC, "m/s");
 				UartSendString(UART_PC, "\n");
-
 			}
 		}
 	}
@@ -271,13 +274,12 @@ void manejarBarrera()
  * Luego crea las tareas encargadas de pesar el vehículo y de medir su velocidad
  * 
  */
-
 void app_main(void)
 {
 	/*Inicialización de periféricos*/
 	HcSr04Init(GPIO_3, GPIO_2); 
 	LedsInit();
-	GPIOInit(GPIO_6, GPIO_OUTPUT);
+	GPIOInit(GPIO_BARRERA, GPIO_OUTPUT);
 
 	/*Inicializacion de UART*/
 	serial_config_t myUart = {
