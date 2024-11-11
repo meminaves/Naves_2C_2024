@@ -43,39 +43,53 @@
 #include "uart_mcu.h"
 
 /*==================[macros and definitions]=================================*/
-/*! @brief Variable que almacena el valor de la distancia medida */
+/*! @brief Variable que almacena el valor de la distancia medida actual*/
 int DISTANCIA;
 
-/*! @brief Período del temporizador para la lectura de la distancia. En este caso 0,1 s*/
+/*! @brief Variable que almacena el valor de la distancia medida anterior*/
+int DISTANCIA_ANTERIOR;
+
+/*! @brief Variable que almacena el valor de la velocidad del vehículo*/
+float VELOCIDAD; 
+
+/*! @brief Período del temporizador para la lectura de la velocidad. En este caso 0,1 s (100000 us)*/
 #define CONFIG_BLINK_PERIOD_TIMER_B 100000 
 /*==================[internal data definition]===============================*/
 
-/*! @brief Task handle para la tarea Tomar Distancia */
-TaskHandle_t taskTomarDistancia_task_handle = NULL;
+/*! @brief Task handle para la tarea Medir Velocidad */
+TaskHandle_t taskMedirVelocidad_task_handle = NULL;
 
 /*==================[internal functions declaration]=========================*/
 /**
- * @fn void FuncTimerTomarDistancia(void* param)
- * @brief Función invocada por la interrupción del timer B para notificar a la tarea de toma de distancia.
+ * @fn void FuncTimerMedirVelocidad(void* param)
+ * @brief Función invocada por la interrupción del timer B para notificar a la tarea de toma de velocidad.
  * @param param Parámetro de la tarea (no utilizado).
  */
-void FuncTimerTomarDistancia(void* param)
+void FuncTimerMedirVelocidad(void* param)
 {
-    vTaskNotifyGiveFromISR(taskTomarDistancia_task_handle, pdFALSE);    	
+    vTaskNotifyGiveFromISR(taskMedirVelocidad_task_handle, pdFALSE);    	
 }
 /**
- * @fn taskTomarDistancia(void *pvParameter)
- * @brief Tarea que toma las medidas de distancia utilizando el sensor ultrasónico
+ * @fn taskMedirVelocidad(void *pvParameter)
+ * @brief Tarea que toma las medidas de distancia utilizando el sensor ultrasónico y además utiliza estas mismas para calcular la velocidad del vehículo
  *
- * La medida se almacena en la variable global Distancia.
+ * La medida se almacena en la variable global .
  *
  * @param pvParameter Parámetro de la tarea (no utilizado)
  */
-static void taskTomarDistancia(void *pvParameter)
+static void taskMedirVelocidad(void *pvParameter)
 {
 	while(true)
 	{
+		DISTANCIA_ANTERIOR = DISTANCIA;
 		DISTANCIA = HcSr04ReadDistanceInCentimeters();
+
+		if (DISTANCIA < 1000) //Si el vehículo se encuentra a menos de 1000 cm (10 m)...
+		{
+			VELOCIDAD = (DISTANCIA_ANTERIOR - DISTANCIA)/(0,1*100); 		//delta de desplazamiento sobre el tiempo que 																	
+																			//transcurrió entre ambos puntos (es decir el tiempo de muestreo)
+		}																	//Además se divide por 100 para convertir de cm a m
+			
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 	}
 }
@@ -91,14 +105,14 @@ void app_main(void)
 	timer_config_t timer_tomar_distancia = {
         .timer = TIMER_B,
         .period = CONFIG_BLINK_PERIOD_TIMER_B,
-        .func_p = FuncTimerTomarDistancia,
+        .func_p = FuncTimerMedirVelocidad,
         .param_p = NULL
     };
 
 	TimerInit(&timer_tomar_distancia);
 	TimerStart(timer_tomar_distancia.timer);
 
-	xTaskCreate(&taskTomarDistancia, "Tomar Medida", 2048, NULL, 5, &taskTomarDistancia_task_handle); 
+	xTaskCreate(&taskMedirVelocidad, "Tomar Medida", 2048, NULL, 5, &taskMedirVelocidad_task_handle); 
 
 }
 /*==================[end of file]============================================*/
