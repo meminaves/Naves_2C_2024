@@ -1,0 +1,25 @@
+var recuperatorio_8c =
+[
+    [ "BUFFER_SIZE", "recuperatorio_8c.html#a6b20d41d6252e9871430c242cb1a56e7", null ],
+    [ "CH_GALGA1", "recuperatorio_8c.html#a78852d65c48cab15bcbf9faf5abf053a", null ],
+    [ "CH_GALGA2", "recuperatorio_8c.html#a2feee9c0131fd026f00bee5c2444d698", null ],
+    [ "CONFIG_BLINK_PERIOD_TIMER_A", "recuperatorio_8c.html#a537a598d1427f8eee034823f9791076b", null ],
+    [ "CONFIG_BLINK_PERIOD_TIMER_B", "recuperatorio_8c.html#a84e8a8202c61d3cca167c527c1f28711", null ],
+    [ "GPIO_BARRERA", "recuperatorio_8c.html#a045dc6cd8bdd3efdbb550e557167c70f", null ],
+    [ "app_main", "recuperatorio_8c.html#a630544a7f0a2cc40d8a7fefab7e2fe70", null ],
+    [ "controlarLeds", "recuperatorio_8c.html#ae99bd039d48d11d4f9327223b09f5a7f", null ],
+    [ "FuncTimerMedirVelocidad", "recuperatorio_8c.html#acbfb2d13a96a765e2cbfb4f3bf9b2167", null ],
+    [ "FuncTimerPesarVehiculo", "recuperatorio_8c.html#ae9968b22931d8dfa47b4bdb50d215c12", null ],
+    [ "manejarBarrera", "recuperatorio_8c.html#a3cf31fef9d7ba1fe3c2b64a921cfebab", null ],
+    [ "pesarVehiculoTask", "recuperatorio_8c.html#a6cad248b629221ba80ea0a0b80f326ae", null ],
+    [ "taskMedirVelocidad", "recuperatorio_8c.html#aa5b8d92bcd428aaf4d0b1b43a2a8327e", null ],
+    [ "DISTANCIA", "recuperatorio_8c.html#a4f56a85a5b95099ed309be797bc9be86", null ],
+    [ "DISTANCIA_ANTERIOR", "recuperatorio_8c.html#aaa6cb248989c5b15a4e60fc4bb9124af", null ],
+    [ "PESO", "recuperatorio_8c.html#aa8a62b04265c6c35133c90a8a2bf6de4", null ],
+    [ "PESOS_GALGA_1", "recuperatorio_8c.html#a794f4e547eeeb5c0d75636ce7f428223", null ],
+    [ "PESOS_GALGA_2", "recuperatorio_8c.html#aee08a45866ddde84f66464bc9d078c27", null ],
+    [ "taskMedirVelocidad_task_handle", "recuperatorio_8c.html#a013f6bec9bd2c04fa5ca59515979dc3c", null ],
+    [ "taskPesarVehiculo_task_handle", "recuperatorio_8c.html#a5d564ab5df9e993777be0ae278c47fa4", null ],
+    [ "VELOCIDAD", "recuperatorio_8c.html#ab62d3bf4dc864df1e30e2e208746ba0a", null ],
+    [ "VELOCIDAD_MAX", "recuperatorio_8c.html#a50f6cc80a838af91f3c006d0e2f822b9", null ]
+];
